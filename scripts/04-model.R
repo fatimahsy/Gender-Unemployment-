@@ -1,8 +1,8 @@
 #### Preamble ####
-# Purpose: Models whether we guessed right, based on our confidence
-# Author: Rohan Alexander
-# Date: 26 March 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: Models 
+# Author: Fatimah Yunusa
+# Date: 2 April2024
+# Contact: fatimah.yunusar@utoronto.ca
 # License: MIT
 # Pre-requisites: 02-data_cleaning.R
 # Any other information needed?
