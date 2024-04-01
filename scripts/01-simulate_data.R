@@ -1,8 +1,8 @@
 #### Preamble ####
-# Purpose: Simulates an analysis dataset about Pokemon level and weakness against fire
-# Author: Rohan Alexander
-# Date: 26 March 2024
-# Contact: rohan.alexander@utoronto.ca
+# Purpose: Simulates an analysis dataset about 
+# Author: Fatimah Yunusa
+# Date: 2 April 2024
+# Contact: fatimah.yunusa@utoronto.ca
 # License: MIT
 # Pre-requisites: -
 # Any other information needed? -
