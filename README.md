@@ -1,15 +1,15 @@
-# An analysis of Pokemon data
+# Analysing the Effect of Gender on Unemployment Between 2018-2023
 
-## Overview
+## 📌 Overview
 
-We examine data about Pokemon. We estimate an Bayesian hierarchical model which explains their attributes based on their functionality.
+We examine data about unemployment rates for both male and female Canadians between the years of 2018-2023. Using multiple linear regression, we also create a multiple linear regression model to help us estimate the overall impacts of sex on unemployment rates within Gen Z. 
 
 
-## File Structure
+## 🗂️File Structure
 
 The repo is structured as:
 
--   `data/raw_data` contains the raw data as obtained from the Pokemon wiki.
+-   `data/raw_data` contains the raw data as obtained from [Statistics Canada](https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=1410032701).
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
 -   `model` contains fitted models. 
 -   `other` contains relevant literature, details about LLM chat interactions, and sketches.
@@ -17,6 +17,13 @@ The repo is structured as:
 -   `scripts` contains the R scripts used to simulate, download and clean data.
 
 
-## Statement on LLM usage
+## 🤖Statement on LLM usage
+
 
 The abstract and introduction were written with the help of ChatGPT and the entire chat history is available in inputs/llms/usage.txt.
+
+
+## 🚀 Launching into Fun! 
+Thanks for exploring my paper! 🌈 May your code be bug-free and your creativity limitless. Happy coding! 🚀
+
+
