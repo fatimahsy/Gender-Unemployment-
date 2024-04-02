@@ -4,27 +4,41 @@
 # Date: 2 April 2024
 # Contact: fatimah.yunusa@utoronto.ca
 # License: MIT
-# Pre-requisites: Need raw data to be saved
-# Any other information needed? -
+# Pre-requisites: run 00-packages_installation.R and download the dataset first
+# Any other information needed? Dataset source: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=1410032701
 
 #### Workspace setup ####
-library(arrow)
+library(readr)
+library(lubridate)
+library(tidyr)
 library(tidyverse)
+library(dplyr)
+library(knitr)
+library(janitor)
+library(scales)
+library(RColorBrewer)
+library(ggplot2)
+library(kableExtra)
+library(here)
+library(arrow)
+
+#### read in unemployment data ####
+
+unemployment_data <- read_csv("data/raw_data/unemployed.csv", skip = 11)
+view(unemployed)
 
 #### Clean data ####
-raw_data <- read_csv("data/raw_data/raw_data.csv")
+unemployement_data <-unemployment_data %>% clean_names()
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(-timestamp) |>
-  rename(c(certainty = how_certain_about_your_guess_are_you,
-           outcome = what_was_the_outcome)) |> 
-  mutate(
-    outcome = if_else(outcome == "Guessed right",
-                      1,
-                      0))
+
+# Remove the bottom five rows (they are not useful to us )
+unemployment_data <- unemployment_data %>%
+  slice(1:(n() - 13))
+
+unemployment_data <- unemployment_data %>%
+  slice(-1:-2)  
 
 
 #### Save data ####
-write_parquet(cleaned_data, "data/analysis_data/analysis_data.parquet")
+write_csv(unemployment_data, here::here("data/analysis_data/cleaned_unemployment_data.csv"))
+write_parquet(unemployment_data, here::here("data/analysis_data/cleaned_unemployment_data.parquet"))

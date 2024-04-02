@@ -6,10 +6,11 @@ author:
 thanks: "Code and data are available at: https://github.com/fatimahsy/Gender-Unemployment-.git."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper examines the impact of gender on unemployment rates across various demographics from 2018 to 2023, employing a comprehensive dataset from the Labor Force Survey to unravel the interplay between gender and overall economic participation.We also imploy the use of a linear regression model to help disect the influence of gender, among other predictors, on the unemployment rates of Generatinon Z. Our findings reveal significant disparities in unemployment trends, with distinct patterns emerging between different genders and age groups, hilighting the persistent gender gap in the labour market. This reaserch is important because t sheds light on the underlying factors that contribute to unemployment disparities, offering insights into the effectiveness of current policies and the need for targeted interventions.Ultimately, this paper enhances our understanding of the labour market's complexities, advocating for inclusinve economic strategies to bridge the gender divide in employment opportunities. "
 format: pdf
 number-sections: true
 bibliography: references.bib
+toc: true 
 ---
 
 ```{r}
@@ -34,140 +35,77 @@ The remainder of this paper is structured as follows. @sec-data....
 
 
 
-```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
+## Data source
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
+## Datat Features 
+
+## Data Analysis 
+
+
+# Model {#sec-model}
+
+## Model Set-up 
+
+$$
+\begin{aligned}
+\text{Gen Z Unemployment} = \beta_0 &+ \beta_1 \cdot \text{Sex} \\
+&+ \beta_2 \cdot \text{Reference Period} \\
+&+ \beta_3 \cdot \text{Adult Unemployment} \\
+&+ \beta_4 \cdot \text{Seniors Unemployment} + \epsilon
+\end{aligned}
+$$
+
+
+Where:
+
+- `Gen z Unemployment` is
+- `Sex` is 
+- `Reference Period` is another independent variable that represents the time frame of the data collection (e.g., year).
+- `Adult Unemployment` and `Seniors Unemployment` are independent variables 
+- $\beta_0$ is the y-intercept, representing the expected value of `Gen z Unemployment` when all the independent variables are 0.
+- $\beta_1, \beta_2, \beta_3, \beta_4$ are the coefficients for each independent variable, representing the change in `Gen z Unemployment` for a one-unit change in the respective independent variable, holding all other variables constant.
+- $\epsilon$ represents the error term, accounting for the variability in `Gen z Unemployment` not explained by the model.
+
 
 Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
-```{r}
+## Model Justification
 
-```
+# Results{#sec-results}
 
+## Generation Z unemployment 
 
+## Seniors Unemployment 
 
+## Adults Unemployment 
 
+## Discussion{#sec-discussion}
 
-# Model
+## Implications of these results 
 
-The goal of our modelling strategy is twofold. Firstly,...
+## Possible Causes 
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
+## Weaknesses and next steps 
 
-## Model set-up
+# Conclusion 
 
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-library(rstanarm)
-
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
 
 \newpage
+
+
 
 \appendix
 
 # Appendix {-}
 
 
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
+# Additional data detail
 
 
 
 
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
 
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
-```
 
 
 
