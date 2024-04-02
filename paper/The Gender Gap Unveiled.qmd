@@ -80,7 +80,7 @@ Talk more about it.
 
 ## Adults Unemployment 
 
-## Discussion{#sec-discussion}
+# Discussion{#sec-discussion}
 
 ## Implications of these results 
 
