@@ -7,7 +7,7 @@
 # Pre-requisites: -
 # Any other information needed? -
 
-```{r}
+
 #### Workspace setup ####
 library(tidyverse)
 
@@ -43,7 +43,7 @@ names(dataf)[3:5] <- age_groups
 # Print the data frame
 print(dataf)
 
-```
+
 
 
 
