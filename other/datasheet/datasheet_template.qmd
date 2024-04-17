@@ -1,5 +1,5 @@
 ---
-title: "Datasheet for 'Labour force characteristics by sex and detailed age group, annual'"
+title: "Datasheet for 'Labour force Survey'"
 subtitle: "2019-2023"
 author: 
   - Fatimah Yunusa
