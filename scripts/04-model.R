@@ -13,6 +13,7 @@ library(arrow)
 library(tidyverse)
 library(rstanarm)
 
+set.seed(400)
 #### Read data ####
 analysis_data <- read_parquet(file = "data/analysis_data/analysis_data.parquet")
 

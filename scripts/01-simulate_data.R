@@ -12,7 +12,7 @@
 library(tidyverse)
 
 #### Simulate data ####
-
+set.seed(400)
 # Define the parameters used
 years <- 2018:2023
 age_groups <- c("15-24", "25-44", "45 and over")

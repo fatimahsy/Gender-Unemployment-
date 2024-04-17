@@ -13,6 +13,7 @@ library(testthat)
 
 
 #### Test data ####
+set.seed(400)
 
 years <- 2018:2023
 age_groups <- c("15-24", "25-44", "45 and over")
