@@ -33,12 +33,16 @@ library(here)
 library(arrow)
 library(rstanarm)
 library(modelsummary)
+
+# Load the dataframe from the CSV file
+unemployment_dataz <- read.csv("/Users/fatimahy/Desktop/Gender&Unemployment/data/unemployment_dataz.csv")
+
 ```
 
 # Introduction
 
 In todays rapidly changing economy, understanding the dynamics of unemployment through the perspective of gender provides crucial insights into the structural inequalities that exist in the labour market. There has always been a persistent gender gap in unemployment rates as a result of normalised gender roles in society. However, in the recent decade, their is an increasing decrease in the size of the gender gap. This can largely be attributed to increased educational attainment among women, changing gender norms, increased childcare support and flexibility, economic shift from manufacturing to service sector, and corporate inclusion efforts. Globally, finding a job as a woman is much harder and when women finally get jobs, they statistically work in low quality jobs (@citesource1).
-   
+
 By examining the interplay between gender and unemployment rates, this paper aims to uncover the underlying patterns that continue to disadvantage one gender over another, in order to offer more efficient and equitable economic policies that decrease the unemployment gap. A Addressing this gap not only positively contributes to economic theory but also has practical implications for improving workforce inclusivity and economic resilience.
 
 This paper leverages a very comprehensive dataset derived from the `Labour Force Survey` [@citedatasetsource] spanning from 2018 to 2023, a period that is notable for its socio-economic turbulence and technological disruptions because of Covid-19 and the increase in artificial intelligence.
@@ -55,11 +59,65 @@ The paper is structured as follows: Following this introduction, we describe the
 
 # Data {#sec-data}
 
-## Data source
+## Data Analysis
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-data
+#| tbl-cap: "Unemployed Data from 2019 to 2023 by sex"
+#| warning: false
+#| message: false
+#| results: 'asis'
+
+
+# Assuming 'unemployment_data' is already in your workspace
+# Calculating total unemployment rates for all genders
+total_unemployment <- unemployment_dataz %>%
+  filter(Sex != "Both sexes") %>%  # Assuming 'Both sexes' already represents the total
+  group_by(Reference_Period) %>%
+  summarize(GenZ_Unemployment = sum(genZ_unemployment, na.rm = TRUE),
+            Adult_Unemployment = sum(adult_unemployment, na.rm = TRUE),
+            Seniors_Unemployment = sum(seniors_unemployment, na.rm = TRUE))
+
+# Create a table using knitr
+knitr::kable(total_unemployment, caption = "Total Unemployment Rates by Age Group")
+
+```
+
+@tbl-data shows a yearly comparison of unemployment rates segmented by age groups, showing the general state of the labour market in relation to Genz, adult and senior unemployment in Canada from 2018-2023. From this, we can see an improvement in the employment landscape.
+
+```{r}
+#| label: fig-unempsum
+#| echo: false
+#| eval: true
+#| fig-cap: "Total Unemployment Rates by Age Group for All Genders"
+#| warning: false
+#| message: false
+#| results: 'asis'
+
+
+# Unemployment trend over the years for each age group
+ggplot(unemployment_dataz, aes(x = Reference_Period, y = genZ_unemployment, group = Sex, color = Sex)) +
+  geom_line() +
+  labs(title = "Unemployment Trends for Gen Z by Gender",
+       x = "Year",
+       y = "Unemployment Rate (%)") +
+  theme_minimal()
+```
+
+@fig-unempsum presents a visual representation of unemployment rates from 2013 to 2023, broken down by gender.A peak is observed in 2020 for all categories which is attributed to the COVID-19 pandemic. Post 2020, the labour force unemployment rates seem to trend downwards, suggesting a recovery phase in the job market.
+
+
+
+
+
+
+
+
+## Data source & Features
 
 The primary and only dataset used in this paper was sourced from the `Labour Force Survey` [@citedatasetsource] that was conducted by the national statistics office of Canada (Statistics Canada). This annual survey captures captures a wide range of information relating to the employment status of Canadians across various demographics, including age, gender,education level, and employment status. The LFS is designed to give a comprehensive snapshot of the workforce and has been a critical source of the data used by policymakers to analyze market conditions.
-
-## Datat Features
 
 To carry out our analysis, we have extracted data from the `Labour Force Survey` [@citedatasetsource] between 2018 to 2023. The key variables are:
 
@@ -71,9 +129,8 @@ To carry out our analysis, we have extracted data from the `Labour Force Survey`
 
 These categories allow us to dissect the impact of age and gender on unemployment rates. The dataset includes a six-year series, capturing fluctuations that may correlate with economic cycles or policy changes.
 
-## Data Analysis
 
-### Data Measurement
+## Data Measurement & Limitations 
 
 The `Labour Force Survey` [@citedatasetsource] provides estimates of employment and unemployment. Here, we give more context to the general survey methods used.
 
@@ -99,18 +156,19 @@ The `Labour Force Survey` [@citedatasetsource] provides estimates of employment 
 
     -   Since the Labour Force Survey is a sample survey, all estimates are subject to both sampling and non-sampling errors. Non-response to the survey tends to average about 10% of eligable households. A weight adjustment is usually applied to account for the households that did not respond.
     -   Sampling errors are measured using coefficients of variation.
+    
+-   Data Limitations 
 
-### Cleaning and Preparation
+    - The Labour Force Survey uses the unemployment rate as a key measure. This rate is the international standard for labour force metrics. Nevertheless, the self-reported nature of the survey data may introduce some bias, a limitation that has to be acknowledged. Even with this limitation, the Labour Force Survey still remains the most useful and accurate dataset available.
+
+A detailed datasheet is also provided in the Appendix (@sec-appendix)
+
+
+## Cleaning and Preparation
 
 The dataset required minimal cleaning, primarily because of the accuracy of the dataset. There were no missing values, which indicates a comprehensive data collection process by Statistics Canada.
 
 To carry out statistical analysis, this paper uses the Statistics of Canada `Labour force characteristics by sex and detailed age group, annual` [@citedataset] dataset. We are using the `R programming language` [@citeR] to conduct the analysis along with `readR` [@citereadR], `lubridate` [@citelubridate], `tidyverse` [@citetidyverse], `dplyr` [@citedplyr], `tidyr` [@citetidyr], `knitr` [@citeknitr], `janitor` [@citejanitor], `scales` [@citescales], `RColorBrewer` [@citeRColorBrewer], `ggplot2` [@citeggplot2], `kableExtra` [@citekableExtra], `here` [@citeHere], `arrow` [@citeArrow], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], and `lme4` [@citelme4].
-
-### Data Limitations
-
-The Labour Force Survey uses the unemployment rate as a key measure. This rate is the international standard for labour force metrics. Nevertheless, the self-reported nature of the survey data may introduce some bias, a limitation that has to be acknowledged. Even with this limitation, the Labour Force Survey still remains the most useful and accurate dataset available.
-
-A detailed datasheet is also provided in the Appendix (@sec-appendix)
 
 # Model {#sec-model}
 
@@ -148,10 +206,9 @@ the coefficients $\beta_1, \beta_2, \beta_3, \beta_4$ identify the relationship 
 
 ## Model Justification
 
-The choice to use a multiple linear regression model to analyze the relationship between age groups, education level, and peoples unemployment status is underpinned by the following considerations.We have chosen to utilize Generation Z as the dependent variable because it has become a growing area of concern mainly as a result of Generation Z's openness and transparency regarding unemployment and its stark realities (@citesource2). Research consistently demonstrates gender disparities in labour market outcomes. Incorporating 'Sex' allows for explicit testing of these disparities within Generation Z. 
+The choice to use a multiple linear regression model to analyze the relationship between age groups, education level, and peoples unemployment status is underpinned by the following considerations.We have chosen to utilize Generation Z as the dependent variable because it has become a growing area of concern mainly as a result of Generation Z's openness and transparency regarding unemployment and its stark realities (@citesource2). Research consistently demonstrates gender disparities in labour market outcomes. Incorporating 'Sex' allows for explicit testing of these disparities within Generation Z.
 
-The model assumes linearity, homoscadasticity, independence, and normality of the error term. It presumes that the relationships between the predictors and the overall outcome are linear and add up. Choosing to use a multiple linear regression allows us to evaluate each variable and its effect independently while controlling for potential impacts of other things. A non-linear model or the inclusion of interaction terms could have been used. The strengths of this model line in the fact that it is a very simple model to interpret, but this might be seen as a weakness as it poses a threat of oversimplifying the already complex labour market. 
-
+The model assumes linearity, homoscedasticity, independence, and normality of the error term. It presumes that the relationships between the predictors and the overall outcome are linear and add up. Choosing to use a multiple linear regression allows us to evaluate each variable and its effect independently while controlling for potential impacts of other things. A non-linear model or the inclusion of interaction terms could have been used. The strengths of this model line in the fact that it is a very simple model to interpret, but this might be seen as a weakness as it poses a threat of oversimplifying the already complex labour market.
 
 # Results {#sec-results}
 

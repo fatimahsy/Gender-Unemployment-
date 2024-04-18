@@ -1,0 +1,19 @@
+"Sex","Reference_Period","genZ_unemployment","adult_unemployment","seniors_unemployment"
+"Both sexes",2018,10.7,5.1,4.9
+"Both sexes",2019,10.7,5.1,4.6
+"Both sexes",2020,20.1,8.5,7.4
+"Both sexes",2021,13.5,6.4,6.7
+"Both sexes",2022,10.1,4.6,4.4
+"Both sexes",2023,10.8,4.9,4.2
+"Males",2018,11.9,5.2,5.1
+"Males",2019,12.1,5.4,4.8
+"Males",2020,20.7,8.7,7.4
+"Males",2021,14.5,6.7,6.6
+"Males",2022,11.2,4.5,4.5
+"Males",2023,11.5,4.9,4.2
+"Females",2018,9.4,5,4.7
+"Females",2019,9.3,4.8,4.3
+"Females",2020,19.4,8.2,7.5
+"Females",2021,12.5,6.2,6.7
+"Females",2022,8.9,4.6,4.4
+"Females",2023,10,4.8,4.1

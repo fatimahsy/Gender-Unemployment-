@@ -2,42 +2,39 @@
 # Purpose: Models 
 # Author: Fatimah Yunusa
 # Date: 2 April2024
-# Contact: fatimah.yunusar@utoronto.ca
+# Contact: fatimah.yunusa@utoronto.ca
 # License: MIT
-# Pre-requisites: 02-data_cleaning.R
+# Pre-requisites: first 00-packages_instalation.R, 02-data_cleaning.R and download the dataset. 
 # Any other information needed?
 
 
 #### Workspace setup ####
-library(arrow)
+library(readr)
+library(lubridate)
 library(tidyverse)
-library(rstanarm)
+library(tidyr)
+library(dplyr)
+library(knitr)
+library(janitor)
+library(scales)
+library(RColorBrewer)
+library(ggplot2)
+library(kableExtra)
+library(here)
+library(arrow)
+library(lme4)
 
 set.seed(400)
 #### Read data ####
-analysis_data <- read_parquet(file = "data/analysis_data/analysis_data.parquet")
+unemployed <- read_csv("data/analysis_data/cleaned_unemployment_data.csv")
 
-analysis_data |>
-  ggplot(aes(x = certainty, y = outcome)) +
-  geom_jitter(height = 0)
+model <- lm(genz_unemployment ~ sex + reference_period + adult_unemployment + seniors_unemployment, data = unemploymed)
 
-
-### Model data ####
-first_model <-
-  stan_glm(
-    formula = outcome ~ certainty,
-    data = analysis_data,
-    family = binomial(link = "logit"),
-    prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
-    prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
-    prior_aux = exponential(rate = 1, autoscale = TRUE),
-    seed = 853
-  )
-
-summary(first_model)
+# Summary of the model
+summary(model)
 
 #### Save model ####
 saveRDS(
-  first_model,
+  model,
   file = "models/first_model.rds"
 )
