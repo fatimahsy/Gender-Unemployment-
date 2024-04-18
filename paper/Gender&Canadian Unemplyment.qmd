@@ -38,7 +38,7 @@ library(modelsummary)
 # Introduction
 
 In todays rapidly changing economy, understanding the dynamics of unemployment through the perspective of gender provides crucial insights into the structural inequalities that exist in the labour market. There has always been a persistent gender gap in unemployment rates as a result of normalised gender roles in society. However, in the recent decade, their is an increasing decrease in the size of the gender gap. This can largely be attributed to increased educational attainment among women, changing gender norms, increased childcare support and flexibility, economic shift from manufacturing to service sector, and corporate inclusion efforts. Globally, finding a job as a woman is much harder and when women finally get jobs, they statistically work in low quality jobs (@citesource1).
-
+   
 By examining the interplay between gender and unemployment rates, this paper aims to uncover the underlying patterns that continue to disadvantage one gender over another, in order to offer more efficient and equitable economic policies that decrease the unemployment gap. A Addressing this gap not only positively contributes to economic theory but also has practical implications for improving workforce inclusivity and economic resilience.
 
 This paper leverages a very comprehensive dataset derived from the `Labour Force Survey` [@citedatasetsource] spanning from 2018 to 2023, a period that is notable for its socio-economic turbulence and technological disruptions because of Covid-19 and the increase in artificial intelligence.
