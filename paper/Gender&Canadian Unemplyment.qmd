@@ -136,7 +136,7 @@ The `Labour Force Survey` [@citedatasetsource] provides estimates of employment 
 
 -   Survey Data Sources and Methodology
 
-    -   The target population for the Survey is the non-institutionalized population 15 years of age and above. They use a stratified multi-stage sampling approach in order to consolidate the collected data from various households.
+    -   The target population for the Survey is the non-institutionalized population 15 years of age and above. They use a stratified multi-stage sampling approach in order to consolidate the collected data from various households. 
 
 -   Error Detection
 
