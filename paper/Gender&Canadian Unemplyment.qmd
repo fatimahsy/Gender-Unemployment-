@@ -73,12 +73,6 @@ These categories allow us to dissect the impact of age and gender on unemploymen
 
 ## Data Analysis
 
-To carry out statistical analysis, this paper uses the Statistics of Canada `Labour force characteristics by sex and detailed age group, annual` [@citedataset] dataset. We are using the `R programming language` [@citeR] to conduct the analysis along with `readR` [@citereadR], `lubridate` [@citelubridate], `tidyverse` [@citetidyverse], `dplyr` [@citedplyr], `tidyr` [@citetidyr], `knitr` [@citeknitr], `janitor` [@citejanitor], `scales` [@citescales], `RColorBrewer` [@citeRColorBrewer], `ggplot2` [@citeggplot2], `kableExtra` [@citekableExtra], `here` [@citeHere], `arrow` [@citeArrow], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], and `lme4` [@citelme4].
-
-### Cleaning and Preparation
-
-The dataset required minimal cleaning, primarily because of the accuracy of the dataset. There were no missing values, which indicates a comprehensive data collection process by Statistics Canada.
-
 ### Data Measurement
 
 The `Labour Force Survey` [@citedatasetsource] provides estimates of employment and unemployment. Here, we give more context to the general survey methods used.
@@ -106,15 +100,23 @@ The `Labour Force Survey` [@citedatasetsource] provides estimates of employment 
     -   Since the Labour Force Survey is a sample survey, all estimates are subject to both sampling and non-sampling errors. Non-response to the survey tends to average about 10% of eligable households. A weight adjustment is usually applied to account for the households that did not respond.
     -   Sampling errors are measured using coefficients of variation.
 
+### Cleaning and Preparation
+
+The dataset required minimal cleaning, primarily because of the accuracy of the dataset. There were no missing values, which indicates a comprehensive data collection process by Statistics Canada.
+
+To carry out statistical analysis, this paper uses the Statistics of Canada `Labour force characteristics by sex and detailed age group, annual` [@citedataset] dataset. We are using the `R programming language` [@citeR] to conduct the analysis along with `readR` [@citereadR], `lubridate` [@citelubridate], `tidyverse` [@citetidyverse], `dplyr` [@citedplyr], `tidyr` [@citetidyr], `knitr` [@citeknitr], `janitor` [@citejanitor], `scales` [@citescales], `RColorBrewer` [@citeRColorBrewer], `ggplot2` [@citeggplot2], `kableExtra` [@citekableExtra], `here` [@citeHere], `arrow` [@citeArrow], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], and `lme4` [@citelme4].
+
 ### Data Limitations
 
 The Labour Force Survey uses the unemployment rate as a key measure. This rate is the international standard for labour force metrics. Nevertheless, the self-reported nature of the survey data may introduce some bias, a limitation that has to be acknowledged. Even with this limitation, the Labour Force Survey still remains the most useful and accurate dataset available.
+
+A detailed datasheet is also provided in the Appendix (@sec-appendix)
 
 # Model {#sec-model}
 
 ## Model Set-up
 
-$$
+The statistical model used to analyze Generation Z unemployment is represented by the following equation: $$
 \begin{aligned}
 \text{Gen Z Unemployment} = \beta_0 &+ \beta_1 \cdot \text{Sex} \\
 &+ \beta_2 \cdot \text{Reference Period} \\
@@ -125,17 +127,31 @@ $$
 
 Where:
 
--   `Gen z Unemployment` is
--   `Sex` is
--   `Reference Period` is another independent variable that represents the time frame of the data collection (e.g., year).
--   `Adult Unemployment` and `Seniors Unemployment` are independent variables
--   $\beta_0$ is the y-intercept, representing the expected value of `Gen z Unemployment` when all the independent variables are 0.
--   $\beta_1, \beta_2, \beta_3, \beta_4$ are the coefficients for each independent variable, representing the change in `Gen z Unemployment` for a one-unit change in the respective independent variable, holding all other variables constant.
+-   `Gen z Unemployment` is the dependent variable we want to predict. unemployment rate for Generation Z (people between the ages of 15 to 24)
+-   `Sex` is an independent dummy variable indicating gender.
+-   `Reference Period` is another independent variable that is a time variable, to account for economic trends and cycles.
+-   `Adult Unemployment`is an independent variable referring to the unemployment rate for adults aged 25 to 44.
+-   `Seniors Unemployment` is an independent variable referring to the unemployment rate for seniors aged 45 and above.
+-   $\beta_0$ is the y-intercept, representing the expected value of `Gen z Unemployment` when all the independent variables are zero.
+-   $\beta_1, \beta_2, \beta_3, \beta_4$ are coefficients for each independent variable, representing the change in `Gen z Unemployment` for a one-unit change in the respective independent variable, holding all other variables constant.
 -   $\epsilon$ represents the error term, accounting for the variability in `Gen z Unemployment` not explained by the model.
 
-Talk more about it.
+the coefficients $\beta_1, \beta_2, \beta_3, \beta_4$ identify the relationship between each independent variable and `Gen z Unemployment`:
+
+-   $\beta_1$ represents the differential impact of gender on Generation Z unemployment. If positive, suggests that being female is associated with higher unemployment rates compared to being male.
+
+-   $\beta_2$ shows the impact of time on unemployment rates.
+
+-   $\beta_3$ measures how unemployment rates in adults (25-44) are related to youth unemployment. A positive value would suggest that higher adult unemployment rates are associated with higher unemployment rates for Generation Z. A negative value would suggest that higher adult unemployment rates are associated with lower unemployment rates for Generation Z, potentially showing a labour market where different age cohorts no not directly compete for the same jobs.
+
+-   $\beta_4$ reflects the relationship between seniors' unemployment rates (45 and above) and Generation z unemployment. If this coefficient is positive, it could imply that when older age groups face unemployment, Generation Z also tends to experience higher unemployment. It it is negative, it could imply a counter-cyclical effect where higher unemployment rates in older populations might correlate with lower unemployment rates among Generation Z, perhaps due to increased part-time or entry-level job openings.
 
 ## Model Justification
+
+The choice to use a multiple linear regression model to analyze the relationship between age groups, education level, and peoples unemployment status is underpinned by the following considerations.We have chosen to utilize Generation Z as the dependent variable because it has become a growing area of concern mainly as a result of Generation Z's openness and transparency regarding unemployment and its stark realities (@citesource2). Research consistently demonstrates gender disparities in labour market outcomes. Incorporating 'Sex' allows for explicit testing of these disparities within Generation Z. 
+
+The model assumes linearity, homoscadasticity, independence, and normality of the error term. It presumes that the relationships between the predictors and the overall outcome are linear and add up. Choosing to use a multiple linear regression allows us to evaluate each variable and its effect independently while controlling for potential impacts of other things. A non-linear model or the inclusion of interaction terms could have been used. The strengths of this model line in the fact that it is a very simple model to interpret, but this might be seen as a weakness as it poses a threat of oversimplifying the already complex labour market. 
+
 
 # Results {#sec-results}
 
@@ -159,7 +175,7 @@ Talk more about it.
 
 \appendix
 
-# Appendix {.unnumbered}
+# Appendix {#sec-appendix}
 
 ## Datasheet for Labour Force Survey
 
