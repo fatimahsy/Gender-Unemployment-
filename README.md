@@ -20,7 +20,7 @@ The repo is structured as:
 ## 🤖Statement on LLM usage
 
 
-Aspects of the code and paper were written with the help of ChatGPT. Some of the data interpretation, test cases, and discussion were also written using ChatGPT. The entire chat history is available in other/llm/usage.txt
+Aspects of the code and paper were written with the help of ChatGPT. Some of the data interpretation, test cases, and general trouble shooting were also written using ChatGPT. The entire chat history is available in other/llm/usage.txt
 
 
 ## 🚀 Launching into Fun! 

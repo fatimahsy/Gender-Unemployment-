@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Simulates an analysis dataset about uneployment rates. 
+# Purpose: Simulates an analysis dataset about unemployment rates. 
 # Author: Fatimah Yunusa
 # Date: 2 April 2024
 # Contact: fatimah.yunusa@utoronto.ca
@@ -10,9 +10,10 @@
 
 #### Workspace setup ####
 library(tidyverse)
-
+set.seed(400)
 #### Simulate data ####
 set.seed(400)
+
 # Define the parameters used
 years <- 2018:2023
 age_groups <- c("15-24", "25-44", "45 and over")
@@ -20,7 +21,7 @@ sexes <- c("both sexes", "male", "female")
 
 # Create simulated data
 dataf <- expand.grid(Year=years, Sex=sexes, AgeGroup=age_groups)
-dataf$UnemploymentRate <- NA # Initialize the unemployment rates column
+dataf$UnemploymentRate <- NA 
 
 # simulate unemployment rates
 simulate_unemployment <- function(base_rate, years, fluctuation_range) {
@@ -35,7 +36,7 @@ for(sex in sexes) {
   }
 }
 
-# Table rearrangements for visuals 
+# Table rearrangements for aestetics!
 dataf <- reshape(dataf, idvar = c("Sex", "Year"), timevar = "AgeGroup", direction = "wide")
 
 names(dataf)[3:5] <- age_groups

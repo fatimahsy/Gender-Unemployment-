@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: https://github.com/fatimahsy/Gender-Unemployment-.git."
 date: today
 date-format: long
-abstract: "This paper examines the impact of gender on unemployment rates across various demographics from 2018 to 2023, employing a comprehensive dataset from the Labor Force Survey to unravel the interplay between gender and overall economic participation.We also imploy the use of a linear regression model to help disect the influence of gender, among other predictors, on the unemployment rates of Generatinon Z. Our findings reveal significant disparities in unemployment trends, with distinct patterns emerging between different genders and age groups, hilighting the persistent gender gap in the labour market. This reaserch is important because it shows the underlying factors that contribute to unemployment disparities, offering insights into the effectiveness of current policies and the need for targeted interventions.Ultimately, this paper enhances our understanding of the labour market's complexities, advocating for inclusinve economic strategies to bridge the gender divide in employment opportunities. "
+abstract: "This paper examines the impact of gender on unemployment rates across various demographics from 2018 to 2023, using a dataset from the Labor Force Survey to unravel the interplay between gender and overall economic participation.We also use a linear regression model to help disect the influence of gender, among other predictors, on the unemployment rates of Generatinon Z. Our findings reveal significant disparities in unemployment trends, with distinct patterns emerging between different genders and age groups, highlighting the persistent gender gap in the labour market. This research is important because it shows the underlying factors that contribute to unemployment disparities, offering insights into the effectiveness of current policies and the need for targeted interventions.This paper enhances our understanding of the labour market's complexities, advocating for inclusinve economic strategies to bridge the gender divide in employment opportunities. "
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -33,27 +33,24 @@ library(here)
 library(arrow)
 library(rstanarm)
 library(modelsummary)
+library(broom)
+library(knitr)
+library(kableExtra)
 
-# Load the dataframe from the CSV file
+# Load the data
 unemployment_dataz <- read.csv("/Users/fatimahy/Desktop/Gender&Unemployment/data/unemployment_dataz.csv")
 
 ```
 
 # Introduction
 
-In todays rapidly changing economy, understanding the dynamics of unemployment through the perspective of gender provides crucial insights into the structural inequalities that exist in the labour market. There has always been a persistent gender gap in unemployment rates as a result of normalised gender roles in society. However, in the recent decade, their is an increasing decrease in the size of the gender gap. This can largely be attributed to increased educational attainment among women, changing gender norms, increased childcare support and flexibility, economic shift from manufacturing to service sector, and corporate inclusion efforts. Globally, finding a job as a woman is much harder and when women finally get jobs, they statistically work in low quality jobs (@citesource1).
+In todays rapidly changing economy, understanding the dynamics of unemployment through the perspective of gender provides insights into the structural inequalities that exist in the labour market. There has always been a persistent gender gap in unemployment rates as a result of normalised gender roles in society. However, in the recent decade, their is an increasing decrease in the size of the gender gap. This can largely be attributed to increased educational attainment among women, changing gender norms, increased childcare support and flexibility, economic shift from manufacturing to service sector, and corporate inclusion efforts. Globally, finding a job as a woman is much harder and when women finally get jobs, they statistically work in low quality jobs (@citesource1).
 
-By examining the interplay between gender and unemployment rates, this paper aims to uncover the underlying patterns that continue to disadvantage one gender over another, in order to offer more efficient and equitable economic policies that decrease the unemployment gap. A Addressing this gap not only positively contributes to economic theory but also has practical implications for improving workforce inclusivity and economic resilience.
+By examining the interplay between gender and unemployment rates, this paper aims to uncover the underlying patterns that continue to disadvantage one gender over another, in order to offer more efficient and equitable economic policies that decrease the unemployment gap.Addressing this gap not only positively contributes to economic theory but also has practical implications for improving workforce inclusivity and economic resilience.
 
-This paper leverages a very comprehensive dataset derived from the `Labour Force Survey` [@citedatasetsource] spanning from 2018 to 2023, a period that is notable for its socio-economic turbulence and technological disruptions because of Covid-19 and the increase in artificial intelligence.
+This paper uses a dataset derived from the `Labour Force Survey` [@citedatasetsource] spanning from 2018 to 2023, a period that is notable for its socio-economic turbulence and technological disruptions because of Covid-19 and the increase in artificial intelligence.Current research in this area has a gap that needs to be filled because despite allot of research in the area, the interplay between gender, age, and unemployment within the specific context of Generation Z remains inadequately explored.
 
-Current research in this area has an extensive gap that needs to be filled because despite extensive research in the area, the interplay between gender, age, and unemployment within the specific context of Generation Z remains inadequately explored.
-
-To address this gap, we employ the use of a linear regression model to scrutinize the influence of gender alongside other predictors of unemployment rates. The estimand in our study is the differential impact of gender on the likelihood of unemployment for individuals within the Generation Z demographic, holding other variables constant.
-
-Our statistical analysis shows that employment trends exhibit significant disparities. These findings affirm the existence of a gender gap but also highlight its persistence and complexity within the labour force.
-
-There are many implications of this research.Understanding the underlying factors of the gender gap in unemployment allows us to evaluate the effectiveness of current Canadian labour force policies. Ultimately, this paper contributes to discussions about labour economics in Canada by advocating for more inclusive policies that aim at decreasing the unemployment gap.
+To address this gap, we employ the use of a linear regression model to scrutinize the influence of gender alongside other predictors of unemployment rates. The estimand in our study is the differential impact of gender on the likelihood of unemployment for individuals within the Generation Z demographic, holding other variables constant.Our statistical analysis shows that employment trends exhibit significant disparities. These findings affirm the existence of a gender gap but also highlight its persistence and complexity within the labour force.There are many implications of this research.Understanding the underlying factors of the gender gap in unemployment allows us to evaluate the effectiveness of current Canadian labour force policies.This paper contributes to discussions about labour economics in Canada by advocating for more inclusive policies that aim at decreasing the unemployment gap.
 
 The paper is structured as follows: Following this introduction, we describe the methodology and data sources used in the analysis in (@sec-data). (@sec-model)describes the model utilized in this paper, and results (@sec-results) relays the results of our statistical analysis. The paper concludes with a discussion (@sec-discussion) of the implications of the results, possible causes, weaknesses and next steps.
 
@@ -71,21 +68,20 @@ The paper is structured as follows: Following this introduction, we describe the
 #| results: 'asis'
 
 
-# Assuming 'unemployment_data' is already in your workspace
 # Calculating total unemployment rates for all genders
 total_unemployment <- unemployment_dataz %>%
-  filter(Sex != "Both sexes") %>%  # Assuming 'Both sexes' already represents the total
+  filter(Sex != "Both sexes") %>%  
   group_by(Reference_Period) %>%
   summarize(GenZ_Unemployment = sum(genZ_unemployment, na.rm = TRUE),
             Adult_Unemployment = sum(adult_unemployment, na.rm = TRUE),
             Seniors_Unemployment = sum(seniors_unemployment, na.rm = TRUE))
 
-# Create a table using knitr
+#  table using knitr
 knitr::kable(total_unemployment, caption = "Total Unemployment Rates by Age Group")
 
 ```
 
-@tbl-data shows a yearly comparison of unemployment rates segmented by age groups, showing the general state of the labour market in relation to Genz, adult and senior unemployment in Canada from 2018-2023. From this, we can see an improvement in the employment landscape.
+@tbl-data shows a yearly comparison of unemployment rates segmented by age groups, showing the general state of the labour market in relation to Genz, adult and senior unemployment in Canada from 2018-2023. From this, we can see an improvement in the employment sector.
 
 ```{r}
 #| label: fig-unempsum
@@ -108,16 +104,9 @@ ggplot(unemployment_dataz, aes(x = Reference_Period, y = genZ_unemployment, grou
 
 @fig-unempsum presents a visual representation of unemployment rates from 2013 to 2023, broken down by gender.A peak is observed in 2020 for all categories which is attributed to the COVID-19 pandemic. Post 2020, the labour force unemployment rates seem to trend downwards, suggesting a recovery phase in the job market.
 
-
-
-
-
-
-
-
 ## Data source & Features
 
-The primary and only dataset used in this paper was sourced from the `Labour Force Survey` [@citedatasetsource] that was conducted by the national statistics office of Canada (Statistics Canada). This annual survey captures captures a wide range of information relating to the employment status of Canadians across various demographics, including age, gender,education level, and employment status. The LFS is designed to give a comprehensive snapshot of the workforce and has been a critical source of the data used by policymakers to analyze market conditions.
+The primary and only dataset used in this paper was sourced from the `Labour Force Survey` [@citedatasetsource] that was conducted by the national statistics office of Canada (Statistics Canada). This annual survey captures captures a wide range of information relating to the employment status of Canadians across various demographics, including age, gender,education level, and employment status. The LFS is designed to give a detailed snapshot of the workforce and has been a critical source of the data used by policymakers to analyze market conditions.
 
 To carry out our analysis, we have extracted data from the `Labour Force Survey` [@citedatasetsource] between 2018 to 2023. The key variables are:
 
@@ -129,14 +118,13 @@ To carry out our analysis, we have extracted data from the `Labour Force Survey`
 
 These categories allow us to dissect the impact of age and gender on unemployment rates. The dataset includes a six-year series, capturing fluctuations that may correlate with economic cycles or policy changes.
 
-
-## Data Measurement & Limitations 
+## Data Measurement & Limitations
 
 The `Labour Force Survey` [@citedatasetsource] provides estimates of employment and unemployment. Here, we give more context to the general survey methods used.
 
 -   Survey Data Sources and Methodology
 
-    -   The target population for the Survey is the non-institutionalized population 15 years of age and above. They use a stratified multi-stage sampling approach in order to consolidate the collected data from various households. 
+    -   The target population for the Survey is the non-institutionalized population 15 years of age and above. They use a stratified multi-stage sampling approach in order to consolidate the collected data from various households.
 
 -   Error Detection
 
@@ -156,17 +144,16 @@ The `Labour Force Survey` [@citedatasetsource] provides estimates of employment 
 
     -   Since the Labour Force Survey is a sample survey, all estimates are subject to both sampling and non-sampling errors. Non-response to the survey tends to average about 10% of eligable households. A weight adjustment is usually applied to account for the households that did not respond.
     -   Sampling errors are measured using coefficients of variation.
-    
--   Data Limitations 
 
-    - The Labour Force Survey uses the unemployment rate as a key measure. This rate is the international standard for labour force metrics. Nevertheless, the self-reported nature of the survey data may introduce some bias, a limitation that has to be acknowledged. Even with this limitation, the Labour Force Survey still remains the most useful and accurate dataset available.
+-   Data Limitations
+
+    -   The Labour Force Survey uses the unemployment rate as a key measure. This rate is the international standard for labour force metrics. Nevertheless, the self-reported nature of the survey data may introduce some bias, a limitation that has to be acknowledged. Even with this limitation, the Labour Force Survey still remains the most useful and accurate dataset available.
 
 A detailed datasheet is also provided in the Appendix (@sec-appendix)
 
-
 ## Cleaning and Preparation
 
-The dataset required minimal cleaning, primarily because of the accuracy of the dataset. There were no missing values, which indicates a comprehensive data collection process by Statistics Canada.
+The dataset required minimal cleaning, primarily because of the accuracy of the dataset. There were no missing values, which indicates a thorough data collection process by Statistics Canada.
 
 To carry out statistical analysis, this paper uses the Statistics of Canada `Labour force characteristics by sex and detailed age group, annual` [@citedataset] dataset. We are using the `R programming language` [@citeR] to conduct the analysis along with `readR` [@citereadR], `lubridate` [@citelubridate], `tidyverse` [@citetidyverse], `dplyr` [@citedplyr], `tidyr` [@citetidyr], `knitr` [@citeknitr], `janitor` [@citejanitor], `scales` [@citescales], `RColorBrewer` [@citeRColorBrewer], `ggplot2` [@citeggplot2], `kableExtra` [@citekableExtra], `here` [@citeHere], `arrow` [@citeArrow], `rstanarm` [@citerstanarm], `modelsummary` [@citemodelsummary], and `lme4` [@citelme4].
 
@@ -212,23 +199,63 @@ The model assumes linearity, homoscedasticity, independence, and normality of th
 
 # Results {#sec-results}
 
-## Generation Z unemployment
+## Model Results
 
-## Seniors Unemployment
+-   **Intercept**: The model's intercept is estimated at approximately -235.13, suggesting that when all other variables are at zero, the predicted Gen Z unemployment rate would be negative, which is not meaningful in this context.
 
-## Adults Unemployment
+-   **Sex**: The coefficients for SexFemales and SexMales suggest a comparison to generation z unemployment. SexFemales has a coefficient of approximately -0.60 , and SexMales has a coefficient of approximately 0.62 . Neither of these are statistically significant at conventional levels, indicating that there is no strong evidence of a difference in unemployment rates between females or males compared to the baseline when controlling for other factors.
+
+-   **Reference_Period**: The coefficient for Reference_Period is about 0.12. This suggests that there is no clear evidence of a trend over time in the Gen Z unemployment rate when other variables are held constant.
+
+-   **Adult_Unemployment**: The coefficient for adult_unemployment is the most statistically significant with an estimate of about 3.12. This suggests that a one-unit increase in the adult unemployment rate is associated with an increase of approximately 3.12 units in the Gen Z unemployment rate, holding other factors constant.
+
+-   **Seniors_Unemployment**: The coefficient for seniors_unemployment is approximately -0.61 , indicating that the association between seniors' unemployment rates and Gen Z's unemployment rates is not statistically significant at the conventional levels.
+
+The model appears to strongly suggest that the unemployment rates among adults are a significant predictor of unemployment rates in Generation Z, while changes in seniors' unemployment rates and the effects of gender do not appear to have a significant association in this model. The lack of statistical significance in several variables could be due to a variety of factors, such as a small sample size, lack of variability in the predictors, or simply that there is no strong relationship between these predictors and the response variable in the population from which the sample was drawn.
 
 # Discussion {#sec-discussion}
 
+## Gender & Unemployment 
+
+
 ## Implications of these results
+
+Based on our analysis, we see that adult unemployment rates have really good predictive power over the unemployment rates among Generation Z. This relationship shows that younger generations are potentially vulnerable because of their lower experience level. When adults face unemployment, generation z individuals are likely to encounter employment challenges.This result is backed by historical trends that show generation z is often less employed than older cohorts (@citesource3). Due to longer periods of unemployment Gen Z will be missing out on allot of entry-level experience. This may affect them later in life, as they will often be playing catch up.
 
 ## Possible Causes
 
+### Sector Vulnerability
+
+Younger generations have workforces that are more primarily mde up of service-oriented sectors like hospitality and leisure. These are the same industries that were widely affected by the pandemic. Their jobs are also often not secure because of their nature of being part-time.
+
+
+
+### Digital & Remote Work Readiness
+
+There has also been a very abrupt shift to remote work. Although generation Z is tech-sravy, the sudden and abrupt shift may have also sidelined people whose jobs cant be performed remotely.
+
+### Educational Disruptions
+
+A possible cause of this might be the unstudied effect of educational levels. Education levels play a very significant part in unemployment rates. There might be an unstudied shift in levels of education between these two age groups.
+
+### Global Economic Slowdown
+
+Beyond the very immediate effects of the pandemic, the global economic slowdown affected international trade, overall investments and supply chains in general. This evidently caused a knock-on effect on job markets around the world.
+
 ## Weaknesses and next steps
+
+While our analysis has been effective in showing various trends, it has shown some limitations. The data chosen heavily relies on aggregate unemployment rates which does not show the underlying trends in the labour market. For example, within Gen Z, as mentioned in the prior section, there may be significant differences based on peoples education level, race, ethnicity,and location that the current analysis does not account for. Another limitation is the static nature of the Labour Force Survey. This data does not track individuals over time, rather it just takes a snapshot of individuals. This does not allow us to truly understand the actual trends. 
+
+In terms of next steps this analysis can take, future research would benefit from a dataset that is more detailed in nature. Looking into datasets that have more variables like economic health metrics, industries, and educational attainment would provide more insight into the labour market in Canada. Incorporating macroeconomic factors like inflation, GDP, and changes in labour market policies could further contextualize the results within broader economic realities. 
+
+By addressing these weaknesses and looking at next steps forward, future research  has the ability to be very informative and shape further labour policies. 
 
 # Conclusion
 
-\newpage
+Analyzing the relationship between gender and unemployment rates from 2018 to 2023 in Canada has revealed several trends within the labour market by using the Labour Force Survey and a linear regression model. The adult unemployment rate emerged as the most significant predictor of Generation Z's empowerment status, a reflection of the broader economic conditions that disproportionately affect the youngest entrants into the labour market. 
+
+Moving forward, it is important for policy makers to take into account the role that gener and age plays in the labour market. This paper shows that inclusive economic strategies that take into account various groups and disparities.To decrease the unemployment rates, it is important to take a multidisciplinary approach where all sectors are considered. Investments into education and  equity will be important in forging a path forward. 
+
 
 \appendix
 
@@ -274,7 +301,7 @@ The model assumes linearity, homoscedasticity, independence, and normality of th
 12. *Does the dataset contain data that, if viewed directly, might be offensive, insulting, threatening, or might otherwise cause anxiety? If so, please describe why.*
     -   No
 13. *Does the dataset identify any sub-populations (for example, by age, gender)? If so, please describe how these subpopulations are identified and provide a description of their respective distributions within the dataset.*
-    -   Yes, the Labour Force Survey (LFS) of Canada identifies and captures data on various sub-populations based on demographic characteristics such as age, gender, education level, and geographic location. These subpopulations are crucial for understanding labor market dynamics and disparities across different groups within the population.
+    -   Yes, the Labour Force Survey (LFS) of Canada identifies and captures data on various sub-populations based on demographic characteristics such as age, gender, education level, and geographic location. These sub populations are important for understanding labor market dynamics and disparities across different groups within the population.
 14. *Is it possible to identify individuals (that is, one or more natural persons), either directly or indirectly (that is, in combination with other data) from the dataset? If so, please describe how.*
     -   No it is not.
 15. *Does the dataset contain data that might be considered sensitive in any way (for example, data that reveals race or ethnic origins, sexual orientations, religious beliefs, political opinions or union memberships, or locations; financial or health data; biometric or genetic data; forms of government identification, such as social security numbers; criminal history)? If so, please provide a description.*

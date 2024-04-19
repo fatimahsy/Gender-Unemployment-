@@ -7,7 +7,6 @@
 # Pre-requisites: first 00-packages_instalation.R, 02-data_cleaning.R and download the dataset. 
 # Any other information needed?
 
-
 #### Workspace setup ####
 library(readr)
 library(lubridate)
@@ -23,8 +22,25 @@ library(kableExtra)
 library(here)
 library(arrow)
 library(lme4)
-
 set.seed(400)
+#### Read data ####
+unemployment_dataz <- read.csv("/Users/fatimahy/Desktop/Gender&Unemployment/data/unemployment_dataz.csv")
+
+
+model <- lm(genZ_unemployment ~ Sex + Reference_Period + adult_unemployment + seniors_unemployment, data = unemployment_dataz)
+
+# Summary of the model
+summary(model)
+
+#### Save model ####
+
+dir.create("models", recursive = TRUE, showWarnings = FALSE)
+
+saveRDS(
+  model,
+  file = here("models/first_model.rds")
+)
+
 #### Read data ####
 unemployed <- read_csv("data/analysis_data/cleaned_unemployment_data.csv")
 

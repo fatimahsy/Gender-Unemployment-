@@ -10,10 +10,9 @@
 #### Workspace setup ####
 library(tidyverse)
 library(testthat)
-
+set.seed(400)
 
 #### Test data ####
-set.seed(400)
 
 years <- 2018:2023
 age_groups <- c("15-24", "25-44", "45 and over")
@@ -37,6 +36,7 @@ for(sex in sexes) {
 dataf <- reshape(dataf, idvar = c("Sex", "Year"), timevar = "AgeGroup", direction = "wide")
 
 names(dataf)[3:5] <- age_groups
+
  ## Test Cases 
 # Test Case 1: Validate DataFrame Structure
 test_that("Data frame has the correct structure", {
@@ -76,23 +76,6 @@ test_that("Sex column contains only specific categories", {
   expect_true(all(dataf$Sex %in% c('both sexes', 'male', 'female')))
 })
 
-# Test Case 8: Cross-Group Consistency
-test_that("Unemployment rates for 'both sexes' is logical average of 'male' and 'female'", {
-  # You would need to implement the logic to calculate and compare the averages here
-  expect_true(TRUE) 
-})
-
-# Test Case 9: Yearly Continuity
-test_that("Year-over-year changes in unemployment rates are within expected threshold", {
-  # You would need to implement the logic to check for continuity here
-  expect_true(TRUE) 
-})
-
-# Test Case 10: Aggregate Statistics
-test_that("Aggregate statistics for unemployment rates are within expected ranges", {
-  # You would need to define expected ranges and implement the checks here
-  expect_true(TRUE) 
-})
 
 # To run all tests
 test_dir("tests")
