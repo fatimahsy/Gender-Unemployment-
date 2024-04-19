@@ -217,6 +217,12 @@ The model appears to strongly suggest that the unemployment rates among adults a
 
 ## Gender & Unemployment 
 
+Our analysis has shown the intersection between gender and unemployment. Contrary to the initial prediction, the anticipated gender gap in unemployment trends did not show high statistical significance within Gen Z. This suggests a potential shift in unemployment for Gen Z that are entering the labour market, possibly showing how gender roles have evolved and the success of equal-opportunity initiatives. 
+
+However, the lack of a clear gender divide should not overshadow the overall impact gender has of unemployment in Canada. Previous literature has shown that economic downturns can increase existing inequalities, most times to the detriment of of women. The lack of significant gender-based differences in our work could be as a result of the unique economic circumstances. This is particularly why i chose the year range 2018-2023. 
+
+While this paper contributes allot to dialogue regarding gender equality in the labour force, it also shows that it is necessary to continue with the research. As Gen z moves further into the workforce, monitoring these patterns would be very beneficial. 
+
 
 ## Implications of these results
 
